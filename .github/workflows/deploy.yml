@@ -5,17 +5,18 @@ on:
     inputs:
       terraform_plan:
         type: choice
-        description: select terraform action
+        description: select terraform plan 
         options:
         - ok 
         - not 
         required: true
       terraform_action:
         type: choice
-        description: select terraform action
+        description: select terraform action 
         options:
         - apply
         - destroy
+        - just for palning 
         required: true
   
   push:
