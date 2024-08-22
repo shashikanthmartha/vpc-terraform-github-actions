@@ -51,11 +51,11 @@ jobs:
       - name: Terraform Apply
         id: apply
         if: ${{ github.event.inputs.terraform_action == 'apply' && github.event.inputs.terraform_plan == 'ok'}}
-        run: terraform ${{ github.event.inputs.terraform_action }}
+        run: terraform ${{ github.event.inputs.terraform_action }} --auto-approve
         working-directory: ./Terraform-VPC
       - name: Terraform Apply
         id: destroy
         if: ${{ github.event.inputs.terraform_action == 'destroy' && github.event.inputs.terraform_plan == 'ok' }}
-        run: terraform ${{ github.event.inputs.terraform_action }}
+        run: terraform ${{ github.event.inputs.terraform_action }} --auto-approve
         working-directory: ./Terraform-VPC
 
