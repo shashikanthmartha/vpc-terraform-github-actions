@@ -1,7 +1,23 @@
 name: Terraform CI CD Pipeline for Deploying AWS Resources
 run-name: ${{ github.actor }} has triggered the pipeline
-
 on:
+  workflow_dispatch:
+    inputs:
+      terraform_plan:
+        type: choice
+        description: select terraform action
+        options:
+        - ok 
+        - not 
+        required: true
+      terraform_action:
+        type: choice
+        description: select terraform action
+        options:
+        - apply
+        - destroy
+        required: true
+  
   push:
     branches:
       - 'main'
@@ -33,5 +49,12 @@ jobs:
         working-directory: ./Terraform-VPC
       - name: Terraform Apply
         id: apply
-        run: terraform destroy --auto-approve
+        if: ${{ github.event.inputs.terraform_action == 'apply' && github.event.inputs.terraform_plan == 'ok'}}
+        run: terraform ${{ github.event.inputs.terraform_action }}
         working-directory: ./Terraform-VPC
+      - name: Terraform Apply
+        id: destroy
+        if: ${{ github.event.inputs.terraform_action == 'destroy' && github.event.inputs.terraform_plan == 'ok' }}
+        run: terraform ${{ github.event.inputs.terraform_action }}
+        working-directory: ./Terraform-VPC
+
